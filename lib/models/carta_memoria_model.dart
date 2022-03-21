@@ -1,6 +1,6 @@
 class CartaMemoriaModel {
   final String pathImage;
-  final bool isEscondida;
+  bool isEscondida;
   final String valor;
 
   CartaMemoriaModel({

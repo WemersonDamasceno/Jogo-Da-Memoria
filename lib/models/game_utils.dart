@@ -1,27 +1,49 @@
-import 'package:flutter/material.dart';
+import 'package:jogo_da_memoria/models/carta_memoria_model.dart';
 
 class Game {
-  final Color hiddenCard = Colors.purple;
-  List<Color>? gameColors;
-  List<String>? gameImg;
-
-  final String hiddenCardpath = "assets/images/hidden.png";
-  List<String> listaDeImagens = [
-    "assets/images/girafa.png",
-    "assets/images/cachorro.png",
-    "assets/images/girafa.png",
-    "assets/images/macaco.png",
-    "assets/images/leao.png",
-    "assets/images/macaco.png",
-    "assets/images/leao.png",
-    "assets/images/cachorro.png",
+  List<CartaMemoriaModel> listaDeCartas = [
+    CartaMemoriaModel(
+      pathImage: "assets/images/macaco.png",
+      isEscondida: true,
+      valor: "macaco",
+    ),
+    CartaMemoriaModel(
+      pathImage: "assets/images/girafa.png",
+      isEscondida: true,
+      valor: "girafa",
+    ),
+    CartaMemoriaModel(
+      pathImage: "assets/images/macaco.png",
+      isEscondida: true,
+      valor: "macaco",
+    ),
+    CartaMemoriaModel(
+      pathImage: "assets/images/cachorro.png",
+      isEscondida: true,
+      valor: "cachorro",
+    ),
+    CartaMemoriaModel(
+      pathImage: "assets/images/leao.png",
+      isEscondida: true,
+      valor: "leao",
+    ),
+    CartaMemoriaModel(
+      pathImage: "assets/images/girafa.png",
+      isEscondida: true,
+      valor: "girafa",
+    ),
+    CartaMemoriaModel(
+      pathImage: "assets/images/leao.png",
+      isEscondida: true,
+      valor: "leao",
+    ),
+    CartaMemoriaModel(
+      pathImage: "assets/images/cachorro.png",
+      isEscondida: true,
+      valor: "cachorro",
+    ),
   ];
-  final int cardCount = 8;
-  List<Map<int, String>> cartasIguais = [];
 
-  //methods
-  void initGame() {
-    gameColors = List.generate(cardCount, (index) => hiddenCard);
-    gameImg = List.generate(cardCount, (index) => hiddenCardpath);
-  }
+  final int quantidadeCartas = 8;
+  List<Map<int, CartaMemoriaModel>> cartasIguais = [];
 }
