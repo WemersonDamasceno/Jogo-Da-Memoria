@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jogo_da_memoria/components/card_game_widget.dart';
-import 'package:jogo_da_memoria/models/game_utils.dart';
+import 'package:jogo_da_memoria/controllers/game_controller.dart';
 
 class JogoDaMemoria extends StatefulWidget {
   const JogoDaMemoria({Key? key}) : super(key: key);
@@ -11,11 +11,12 @@ class JogoDaMemoria extends StatefulWidget {
 
 class _JogoDaMemoriaState extends State<JogoDaMemoria> {
   int pontos = 0;
-  final Game game = Game();
+  final game = GameController();
 
   @override
   void initState() {
     super.initState();
+    game.listaDeCartas.shuffle();
   }
 
   @override
@@ -49,7 +50,7 @@ class _JogoDaMemoriaState extends State<JogoDaMemoria> {
             style: TextStyle(fontSize: 20),
           ),
           SizedBox(
-            height: size.width * 1,
+            height: size.height * .7,
             width: size.width * 0.9,
             child: GridView.builder(
               itemCount: game.quantidadeCartas,

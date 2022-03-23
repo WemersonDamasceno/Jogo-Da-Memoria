@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CardGameWidget extends StatelessWidget {
+class CardGameWidget extends StatefulWidget {
   final bool isEscondida;
   final String pathImage;
+
   const CardGameWidget({
     Key? key,
     required this.isEscondida,
@@ -10,17 +11,35 @@ class CardGameWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CardGameWidget> createState() => _CardGameWidgetState();
+}
+
+class _CardGameWidgetState extends State<CardGameWidget> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 6,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(7),
-          image: DecorationImage(
-            image: isEscondida
-                ? AssetImage("assets/images/hidden.png")
-                : AssetImage(pathImage),
-            fit: BoxFit.cover,
+    return GestureDetector(
+      //onTap: () => flipCard(),
+      child: Card(
+        elevation: 6,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(7),
+            image: DecorationImage(
+              image: widget.isEscondida
+                  ? AssetImage("assets/images/hidden.png")
+                  : AssetImage(widget.pathImage),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       ),
