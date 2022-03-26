@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_da_memoria/pages/jogo_da_memoria_page.dart';
+import 'package:jogo_da_memoria/pages/escolha_jogo_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Flutter Demo',
-      home: JogoDaMemoria(),
+      home: EscolhaJogoPage(),
     );
   }
 }
