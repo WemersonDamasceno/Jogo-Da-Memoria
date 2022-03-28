@@ -16,6 +16,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   mobx: ^2.0.6+1
   flutter_mobx: ^2.0.4
+  audioplayers: ^0.20.1
 
 dev_dependencies:
   flutter_test:
@@ -27,9 +28,13 @@ dev_dependencies:
 
 flutter:
   assets:
+    - assets/
     - assets/images/
     - assets/images/jogo_memoria/
     - assets/images/jogo_imitacao/
+    - assets/images/jogo_imitacao/animais/
+    - assets/images/jogo_imitacao/audios/
+    
 
   uses-material-design: true
 

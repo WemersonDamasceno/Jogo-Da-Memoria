@@ -1,4 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_da_memoria/jogo%20da%20imitacao/models/animal_item_model.dart';
+import 'package:jogo_da_memoria/jogo%20da%20imitacao/pages/widgets/animal_item_widget.dart';
 
 class JogoDaImitacaoPage extends StatefulWidget {
   const JogoDaImitacaoPage({Key? key}) : super(key: key);
@@ -8,7 +11,62 @@ class JogoDaImitacaoPage extends StatefulWidget {
 }
 
 class _JogoDaImitacaoPageState extends State<JogoDaImitacaoPage> {
-  String animalFoco = "assets/images/jogo_imitacao/elefante.png";
+  bool playing = false;
+  late AudioPlayer _player;
+  late AudioCache cache;
+  IconData iconPlay = Icons.play_circle_outline_rounded;
+
+  AnimalItemModel animalFoco = AnimalItemModel(
+    pathImage: "assets/images/jogo_imitacao/animais/cabra.png",
+    som: "cabra",
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _player = AudioPlayer();
+    cache = AudioCache(fixedPlayer: _player);
+  }
+
+  escolhaAnimalReproduzirFonema(String animalSom) {
+    switch (animalSom) {
+      case "vaca":
+        tocarSom("fonema_m.mp3");
+        break;
+      case "cobra":
+        tocarSom("fonema_s.mp3");
+        break;
+      case "abelha":
+        tocarSom("fonema_z.mp3");
+        break;
+      case "cabra":
+        tocarSom("fonema_m2.mp3");
+        break;
+      case "galinha":
+        tocarSom("fonema_p.mp3");
+        break;
+    }
+  }
+
+  tocarSom(String fonemaEscolhido) {
+    setState(() {
+      if (!playing) {
+        iconPlay = Icons.pause_circle_outline_rounded;
+        cache.play("images/jogo_imitacao/audios/$fonemaEscolhido");
+        playing = true;
+        Future.delayed(Duration(milliseconds: 2500)).then((value) {
+          setState(() {
+            iconPlay = Icons.play_circle_outline_rounded;
+            playing = false;
+          });
+        });
+      } else {
+        iconPlay = Icons.play_circle_outline_rounded;
+        _player.pause();
+        playing = false;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +77,6 @@ class _JogoDaImitacaoPageState extends State<JogoDaImitacaoPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        title: Text(""),
       ),
       body: Stack(
         children: [
@@ -35,10 +92,7 @@ class _JogoDaImitacaoPageState extends State<JogoDaImitacaoPage> {
             left: 0,
             child: SizedBox(
               height: height * 0.2,
-              child: Hero(
-                tag: "animal_foco",
-                child: Image.asset(animalFoco),
-              ),
+              child: Image.asset(animalFoco.pathImage),
             ),
           ),
           Positioned(
@@ -49,9 +103,11 @@ class _JogoDaImitacaoPageState extends State<JogoDaImitacaoPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      escolhaAnimalReproduzirFonema(animalFoco.som);
+                    },
                     child: Icon(
-                      Icons.play_circle_outline_rounded,
+                      iconPlay,
                       color: Colors.white,
                       size: 50,
                     ),
@@ -81,55 +137,64 @@ class _JogoDaImitacaoPageState extends State<JogoDaImitacaoPage> {
               ),
               height: height * 0.2,
               width: width,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
                 children: [
-                  InkWell(
-                    onTap: () {
+                  AnimalItemWidget(
+                    onPressed: () {
                       setState(() {
-                        animalFoco = "assets/images/jogo_imitacao/cobra.png";
+                        animalFoco.pathImage =
+                            "assets/images/jogo_imitacao/animais/cabra.png";
+                        animalFoco.som = "cabra";
                       });
                     },
-                    child: Image.asset(
-                      "assets/images/jogo_imitacao/cobra.png",
-                      width: width * 0.25,
-                    ),
+                    pathImage: "assets/images/jogo_imitacao/animais/cabra.png",
+                    padding: 0,
                   ),
-                  InkWell(
-                    onTap: () {
+                  AnimalItemWidget(
+                    onPressed: () {
                       setState(() {
-                        animalFoco = "assets/images/jogo_imitacao/cachorro.png";
+                        animalFoco.pathImage =
+                            "assets/images/jogo_imitacao/animais/vaca.png";
+                        animalFoco.som = "vaca";
                       });
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Image.asset(
-                        "assets/images/jogo_imitacao/cachorro.png",
-                        width: width * 0.25,
-                      ),
-                    ),
+                    padding: 0,
+                    pathImage: "assets/images/jogo_imitacao/animais/vaca.png",
                   ),
-                  InkWell(
-                    onTap: () {
+                  AnimalItemWidget(
+                    onPressed: () {
                       setState(() {
-                        animalFoco = "assets/images/jogo_imitacao/elefante.png";
+                        animalFoco.pathImage =
+                            "assets/images/jogo_imitacao/animais/abelha.png";
+                        animalFoco.som = "abelha";
                       });
                     },
-                    child: Image.asset(
-                      "assets/images/jogo_imitacao/elefante.png",
-                      width: width * 0.25,
-                    ),
+                    padding: 0,
+                    pathImage: "assets/images/jogo_imitacao/animais/abelha.png",
                   ),
-                  InkWell(
-                    onTap: () {
+                  AnimalItemWidget(
+                    onPressed: () {
                       setState(() {
-                        animalFoco = "assets/images/jogo_imitacao/abelha.png";
+                        animalFoco.pathImage =
+                            "assets/images/jogo_imitacao/animais/galinha.png";
+                        animalFoco.som = "galinha";
                       });
                     },
-                    child: Image.asset(
-                      "assets/images/jogo_imitacao/abelha.png",
-                      width: width * 0.25,
-                    ),
+                    padding: 0,
+                    pathImage:
+                        "assets/images/jogo_imitacao/animais/galinha.png",
+                  ),
+                  AnimalItemWidget(
+                    onPressed: () {
+                      setState(() {
+                        animalFoco.pathImage =
+                            "assets/images/jogo_imitacao/animais/cobra.png";
+                        animalFoco.som = "cobra";
+                      });
+                    },
+                    padding: 0,
+                    pathImage: "assets/images/jogo_imitacao/animais/cobra.png",
                   ),
                 ],
               ),
